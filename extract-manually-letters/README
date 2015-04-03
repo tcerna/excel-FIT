@@ -1,0 +1,9 @@
+
+extract-letters
+===============
+
+Application which extract letter from licence plates images. It saves positives and negatives samples into prepared folders.
+
+Run:
+    ./extract-letters -d <directory with LP>
+

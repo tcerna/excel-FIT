@@ -1,0 +1,8 @@
+
+sort-to-categories
+==================
+
+Application which process positive letter samples and sort them according to quality. Sorted images are saved into folder categories.
+
+Run:
+    ./sort-to-categories -d <directory with positive letter samples>

@@ -1,0 +1,9 @@
+
+processVideo
+============
+
+Application for cutting video into frames. App get each 25 frame and save it into folder data.
+
+Run:
+    ./processVideo -i <inputVideo>
+

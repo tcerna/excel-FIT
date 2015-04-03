@@ -1,0 +1,68 @@
+DETEKCE DOPRAVNI ZNACKY V OBRAZE
+================================
+
+Tato slozka obsahuje soubory pro pripravu dat a souboru pro trenovani kaskadou.
+
+
+Aplikace:
+=========
+
+training---find-LP -d <image-list> -w <max-size-LP> -p <range-around-LP>" 
+    
+    -d <image-list>        v parametru se vklada seznam cest k obrazkum urcenych pro detekci
+    -w <max-size-LP>       udej pomer, kolik sirky obrazku maximalne zabira nejvetsi mozna SPZ,
+                           musi byt v intervalu <0,1>
+    -p <range-around-LP>   hodnota vysky SPZ v procentech, jak velky okraj se ma k nadetekovane
+                           SPZ pridat
+
+    Vystupem aplikace je slozka LP-dataset, ve ktere jsou ulozeny nadetekovane SPZ, a soubor 
+    LP-list.dat, ktery obsahuje seznam souboru ve slozce LP-dataset. Vse je ulozeno do slozky s 
+    puvodnim datasetem.
+
+
+NYNI JE NUTNE PROJIT SLOZKU LP-dataset A RUCNE SMAZAT VSE, CO BYLO NADETEKOVANO SPATNE.
+
+
+training---prepare-data -d <LP-list>
+
+    -d <LP-list>          parametr obsahuje odkaz na soubor vytvoreny predchozi aplikaci
+
+    Vystupem jsou soubory a slozky:
+    positive-dataset      adresar obsahujici originalni obrazky, ktere obsahuji aspon jednu SPZ
+    negative-dataset      adresar obsahujici originalni obrazky, ktere maji zacernene SPZ
+    pos-list.dat          soubor obsahujici seznam obrazku s SPZ a jejich pozicemi, kde se znacka 
+                          nachazi
+    neg-list.dat          soubor obsahujici seznam obrazku, ktere neobsahuji SPZ
+
+
+NYNI JE NUTNE PROJIT ADRESAR negative-dataset A RUCNE PREBARVIT NACERNO VSECHNY SPZ, KTERE ZUSTALY
+NEZACERNENY.
+
+
+--->> TAK PRAVE TADY NA TOMTO MISTE MUZEME KONECNE ZACIT TRENOVAT POMOCI FUNKCI OPENCV:
+    
+    opencv_createsamples
+    --------------------
+    ./opencv\_createsamples  -info /\$PATH/pos-list.dat
+                             -vec /\$PATH/samples.vec
+                             -w 60 -h 16 -num 2745
+    
+    opencv_traincascade
+    -------------------
+    ./opencv\_traincascade -data /\$PATH/classifier
+                           -vec /\$PATH/samples.vec
+                           -bg /\$PATH/neg-list.dat
+                           -numPos 1000 -numNeg 1000
+                           -numStages 10 -w 60 -h 16
+                           -featureType LBP    
+
+
+detection -i <src-img> -l <list-of-images> -d <detector> 
+
+    -l <list-of-images>   seznam obsahujici cesty k obrazkum
+    -d <detector>         detektor (cascade.xml)
+
+    Vystupem je obrazek zobrazeny pomoci imshow, ve kterem jsou zelene vyznaceny bounding boxy
+    s nadetekovanymi spz.
+
+

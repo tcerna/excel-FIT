@@ -1,0 +1,17 @@
+
+create-annotation
+=================
+
+Application for creating data annotation. Result is written in standart output and have to be redirected to file.
+
+Run:
+    ./create-annotation -l <list of images>
+
+
+automatic-evaluation
+====================
+
+Application for automatic evaluation of success LP detector. 
+
+Run:
+    ./automatic-evaluation -l <list with annotations> -d <detector>
