@@ -1,0 +1,13 @@
+README
+======
+
+Title: Detekce a rozpoznání registrační značky vozidla pro analýzu dopravy
+       License Plate Detection and Recognition for Traffic Analysis
+Author: Bc. Tereza Černá
+
+Directories:
+    - process-video: Get input video and cut it into images.
+    - train-LP-detector: Data preparation before training LP detector. LP detector. Application for display result of LP detector.
+    - success-evaluation-of-LP: Create data annotation and automatic evaluation of the success.
+    - extract-manually-letters: Preparation of positive and negative dataset for training letter classifier.
+    - sort-to-categories: Application which get positive letter samples and sort them according to quality.
